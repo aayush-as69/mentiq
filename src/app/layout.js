@@ -1,4 +1,8 @@
+import { Bricolage_Grotesque, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
+
+const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-bricolage", display: "swap" });
+const sans = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hanken", display: "swap" });
 
 export const metadata = {
   title: { default: "Mentiq — AI that learns how you learn", template: "%s · Mentiq" },
@@ -9,7 +13,7 @@ export const viewport = { width: "device-width", initialScale: 1, themeColor: "#
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${display.variable} ${sans.variable}`}>
       <body className="min-h-screen text-slate-900 antialiased">
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-lg focus:bg-indigo-600 focus:px-3 focus:py-2 focus:text-white">
           Skip to content

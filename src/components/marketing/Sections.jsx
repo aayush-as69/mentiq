@@ -1,9 +1,9 @@
+import Link from "next/link";
 import { Logo } from "@/components/layout/Logo";
+import { HeroVisual } from "@/components/marketing/HeroVisual";
 import { Badge, ButtonLink } from "@/components/ui/primitives";
 import { LineChart } from "@/components/ui/Charts";
 import { MasteryBar } from "@/components/ui/Mastery";
-
-const SAMPLE = [["Reflection", 0.91], ["Refraction", 0.72], ["Lens Formula", 0.31], ["Ohm's Law", 0.81]];
 
 function SectionHead({ id, eyebrow, title, body }) {
   return (
@@ -16,19 +16,22 @@ function SectionHead({ id, eyebrow, title, body }) {
 }
 
 export function LandingNav({ session, startHref }) {
+  const link = "rounded-md px-1 py-0.5 transition-colors hover:text-white";
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200/70 bg-white/80 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-white/10 bg-[#060914]/95 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
-        <Logo />
-        <nav aria-label="Sections" className="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
-          <a href="#how-it-works" className="hover:text-slate-900">How it works</a>
-          <a href="#learner-model" className="hover:text-slate-900">Learner model</a>
-          <a href="#misconceptions" className="hover:text-slate-900">Misconceptions</a>
-          <a href="#teachers" className="hover:text-slate-900">Teachers</a>
+        <Logo light />
+        <nav aria-label="Sections" className="hidden items-center gap-7 text-sm font-medium text-slate-400 md:flex">
+          <a href="#how-it-works" className={link}>How it works</a>
+          <a href="#learner-model" className={link}>Learner model</a>
+          <a href="#misconceptions" className={link}>Misconceptions</a>
+          <a href="#teachers" className={link}>Teachers</a>
         </nav>
         <div className="flex items-center gap-2">
-          {!session && <ButtonLink href="/login" variant="ghost">Sign in</ButtonLink>}
-          <ButtonLink href={session ? "/dashboard" : startHref}>{session ? "Open app" : "Start Diagnostic"}</ButtonLink>
+          {!session && <Link href="/login" className="rounded-xl px-3 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white">Sign in</Link>}
+          <Link href={session ? "/dashboard" : startHref} className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm transition hover:bg-indigo-100">
+            {session ? "Open app" : "Start diagnostic"}
+          </Link>
         </div>
       </div>
     </header>
@@ -37,45 +40,41 @@ export function LandingNav({ session, startHref }) {
 
 export function Hero({ startHref }) {
   return (
-    <section className="relative overflow-hidden">
-      <div className="bg-grid pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
-      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:py-24">
+    <section className="relative overflow-hidden bg-[#060914] text-white">
+      {/* depth: two soft light sources and a faint dot grid that fades out */}
+      <div aria-hidden className="pointer-events-none absolute -right-40 -top-40 h-[640px] w-[640px] rounded-full bg-indigo-600/30 blur-[140px]" />
+      <div aria-hidden className="pointer-events-none absolute -bottom-52 left-[-10%] h-[480px] w-[480px] rounded-full bg-rose-500/10 blur-[140px]" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-60 [background-image:radial-gradient(circle_at_1px_1px,rgb(255_255_255/0.09)_1px,transparent_0)] [background-size:26px_26px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
+
+      <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 pb-20 pt-16 sm:px-6 lg:grid-cols-[1fr_1.05fr] lg:gap-10 lg:pb-28 lg:pt-24">
         <div className="animate-fade-up">
-          <Badge tone="indigo">Class 10 Physics · Adaptive exam prep</Badge>
-          <h1 className="font-display mt-5 text-5xl font-semibold leading-[1.05] tracking-tight text-slate-900 sm:text-6xl">
-            Mentiq
-            <span className="block text-indigo-600">AI that learns how you learn.</span>
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/[0.06] px-3 py-1 text-sm font-medium text-indigo-200 ring-1 ring-white/10">
+            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-amber-300" />
+            Class 10 Physics, adaptive exam prep
+          </span>
+          <h1 className="font-display mt-6 text-5xl font-semibold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
+            <span className="sr-only">Mentiq: </span>
+            AI that learns how you learn.
           </h1>
-          <p className="mt-6 max-w-xl text-lg text-slate-600">
+          <p className="mt-6 max-w-lg text-lg leading-relaxed text-slate-300">
             An adaptive exam-prep tutor that understands what you know, detects what you misunderstand, and builds your next learning step around you.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <ButtonLink href={startHref} className="px-6 py-3 text-base">Start Diagnostic</ButtonLink>
-            <ButtonLink href="#how-it-works" variant="secondary" className="px-6 py-3 text-base">See How Mentiq Works</ButtonLink>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link href={startHref} className="inline-flex items-center justify-center rounded-xl bg-indigo-500 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-indigo-500/30 transition hover:bg-indigo-400">
+              Start diagnostic
+            </Link>
+            <Link href="#how-it-works" className="inline-flex items-center justify-center rounded-xl px-6 py-3 text-base font-semibold text-white ring-1 ring-white/20 transition hover:bg-white/10">
+              See how Mentiq works
+            </Link>
           </div>
-          <dl className="mt-10 grid max-w-md grid-cols-3 gap-4 text-sm">
+          <dl className="mt-12 grid max-w-md grid-cols-3 gap-5 border-t border-white/10 pt-6 text-sm">
             {[["Understand", "what you actually know"], ["Adapt", "what you practise next"], ["Improve", "measured, not guessed"]].map(([t, d]) => (
-              <div key={t}><dt className="font-display text-lg font-semibold text-slate-900">{t}</dt><dd className="text-slate-500">{d}</dd></div>
+              <div key={t}><dt className="font-display text-lg font-semibold text-white">{t}</dt><dd className="mt-0.5 text-slate-400">{d}</dd></div>
             ))}
           </dl>
         </div>
         <div className="animate-fade-up [animation-delay:150ms]">
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-indigo-100">
-            <div className="flex items-center justify-between">
-              <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">Your learning profile</p>
-              <Badge tone="emerald">● Live model</Badge>
-            </div>
-            <div className="mt-5 space-y-3">
-              {SAMPLE.map(([name, v]) => (
-                <div key={name}><div className="mb-1 text-sm font-medium text-slate-700">{name}</div><MasteryBar value={v} label={name} /></div>
-              ))}
-            </div>
-            <div className="mt-6 rounded-2xl border border-rose-200 bg-rose-50 p-4">
-              <p className="text-xs font-semibold uppercase tracking-wider text-rose-700">Misconception detected · 89% confidence</p>
-              <p className="mt-1 text-sm text-rose-900">Confusing focal length with lens power.</p>
-              <p className="mt-2 text-xs text-rose-700">Next: easy conceptual check → medium numerical → hard application</p>
-            </div>
-          </div>
+          <HeroVisual />
         </div>
       </div>
     </section>
